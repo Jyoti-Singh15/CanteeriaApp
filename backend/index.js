@@ -48,18 +48,24 @@ io.on('connection', (socket) => {
 const seedData = async () => {
     try {
         // Seed Admin (Secured)
-        const adminEmail = "admin@canteeria.com";
-        const adminExists = await User.findOne({ email: adminEmail });
-        if (!adminExists) {
-            const hashedPassword = await bcrypt.hash("password", 10);
-            const adminUser = new User({
-                name: "Admin User",
-                email: adminEmail,
-                password: hashedPassword,
-                role: "admin"
-            });
-            await adminUser.save();
-            console.log("Seeded default admin user (Secured)");
+        const adminEmail = process.env.ADMIN_EMAIL;
+        const adminPassword = process.env.ADMIN_PASSWORD;
+
+        if (adminEmail && adminPassword) {
+            const adminExists = await User.findOne({ email: adminEmail });
+            if (!adminExists) {
+                const hashedPassword = await bcrypt.hash(adminPassword, 10);
+                const adminUser = new User({
+                    name: "Admin User",
+                    email: adminEmail,
+                    password: hashedPassword,
+                    role: "admin"
+                });
+                await adminUser.save();
+                console.log("Seeded admin user from Environment Variables");
+            }
+        } else {
+            console.log("Skipping Admin Seed: ADMIN_EMAIL or ADMIN_PASSWORD not set.");
         }
 
         // Seed Products if empty
