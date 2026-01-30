@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Hardcoded for local dev. Replace with your IP for physical device.
-const API_URL = 'https://canteeriaapp.onrender.com';
+// Use environment variable, fallback to hardcoded production URL if missing
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://canteeriaapp.onrender.com';
 
 const apiCall = async (endpoint, options = {}) => {
   const url = `${API_URL}${endpoint}`;
