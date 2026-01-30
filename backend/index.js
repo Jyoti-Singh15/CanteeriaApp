@@ -26,7 +26,13 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Serve Static Files (KDS Website)
+// Serve Static Files (KDS Website)
 app.use(express.static('public'));
+
+// Explicit route for Kitchen Display
+app.get('/kitchen', (req, res) => {
+    res.sendFile(__dirname + '/public/kitchen.html');
+});
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/canteeria', {})
