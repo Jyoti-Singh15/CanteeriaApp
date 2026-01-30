@@ -1,0 +1,79 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@canteeria.com",
+      "password": "password",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Jyoti User",
+      "email": "user@gmail.com",
+      "password": "password",
+      "role": "user"
+    },
+    {
+      "id": 1769694766844,
+      "name": "Jyoti singh",
+      "email": "singh@gmail.com",
+      "password": "123456",
+      "role": "user"
+    },
+    {
+      "id": 1769694907644,
+      "name": "bhavishya",
+      "email": "bhavishya@gmail.com",
+      "password": "456789",
+      "role": "user"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Veg Burger",
+      "price": 50,
+      "image": "https://img.freepik.com/free-photo/fresh-tasty-burger_144627-7424.jpg",
+      "category": "Fast Food",
+      "rating": 4.5
+    },
+    {
+      "id": 2,
+      "name": "Masala Dosa",
+      "price": 80,
+      "image": "https://img.freepik.com/free-photo/delicious-indian-dosa-composition_23-2149086051.jpg",
+      "category": "South Indian",
+      "rating": 4.8
+    },
+    {
+      "id": 3,
+      "name": "Paneer Tikka",
+      "price": 120,
+      "image": "https://img.freepik.com/free-photo/grilled-paneer-tikka-is-popular-north-indian-starter-served-with-green-chutney-onion-salad-selective-focus_466689-73628.jpg",
+      "category": "Starters",
+      "rating": 4.6
+    }
+  ],
+  "orders": [
+    {
+      "id": 101,
+      "userId": 2,
+      "total": 130,
+      "status": "completed",
+      "date": "2024-01-20"
+    },
+    {
+      "id": 102,
+      "userId": 2,
+      "total": 50,
+      "status": "pending",
+      "date": "2024-01-21"
+    }
+  ],
+  "analytics": {
+    "totalSales": 25000,
+    "totalOrders": 145,
+    "popularItem": "Veg Burger"
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Canteeria Kitchen</title>
+    <link rel="stylesheet" href="kitchen.css" />
+</head>
+
+<body>
+    <header class="kds-header">
+        <div>
+            <h1>👨‍🍳 Kitchen Display</h1>
+            <p>Live Order Management System</p>
+        </div>
+        <div class="kds-badges">
+            <div class="kds-badge warning">
+                <span>Pending</span>
+                <strong id="pending-count">0</strong>
+            </div>
+            <div class="kds-badge info">
+                <span>Preparing</span>
+                <strong id="preparing-count">0</strong>
+            </div>
+            <div class="kds-badge success">
+                <span>Ready</span>
+                <strong id="ready-count">0</strong>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="kds-toolbar">
+            <div class="filter-group">
+                <button data-filter="all" class="active">All Orders</button>
+                <button data-filter="pending">Pending</button>
+                <button data-filter="preparing">Preparing</button>
+                <button data-filter="ready">Ready</button>
+                <button data-filter="completed">History</button>
+            </div>
+            <button id="refresh-btn" class="btn-refresh">🔄 Refresh</button>
+        </section>
+
+        <section id="orders-container" class="kds-board">
+            <!-- Orders injected here -->
+        </section>
+    </main>
+
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="kitchen.js"></script>
+</body>
+
+</html>
