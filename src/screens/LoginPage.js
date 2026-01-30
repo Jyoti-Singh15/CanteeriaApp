@@ -7,7 +7,7 @@ import { Utensils } from 'lucide-react-native';
 
 // Use 10.0.2.2 for Android Emulator, localhost for iOS Simulator/Web
 // For physical device, replace with your PC's IP address (e.g., 192.168.1.5)
-const API_URL = 'http://10.0.2.2:5000/api/auth/login';
+import { login } from '../lib/api';
 
 export default function LoginPage({ navigation }) {
   const [email, setEmail] = useState('');
@@ -22,15 +22,11 @@ export default function LoginPage({ navigation }) {
 
     setLoading(true);
     try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+      const data = await login({ email, password });
 
-      const data = await response.json();
+      // const data = await response.json(); // helper returns data directly
 
-      if (response.ok) {
+      if (data.success) {
         await AsyncStorage.setItem('userToken', data.token);
         await AsyncStorage.setItem('userName', data.user.name);
         await AsyncStorage.setItem('userEmail', data.user.email);

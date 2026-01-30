@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SPACING, SHADOWS } from '../theme';
 import { UserPlus } from 'lucide-react-native';
 
-const API_URL = 'http://10.0.2.2:5000/api/auth/signup';
+import { signUp } from '../lib/api';
 
 export default function SignUpPage({ navigation }) {
   const [name, setName] = useState('');
@@ -21,15 +21,9 @@ export default function SignUpPage({ navigation }) {
     setLoading(true);
     try {
       // Logic adapted from your web SignUpPage
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const data = await signUp({ name, email, password });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (data.success) {
         Alert.alert('Success', 'Account created! Please login.');
         navigation.replace('Login');
       } else {
