@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Utensils, ShoppingCart, User } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// State & Screens
 import { CartProvider } from './src/context/CartContext';
 import LoginPage from './src/screens/LoginPage';
 import SignUpPage from './src/screens/SignUpPage';
@@ -14,7 +13,7 @@ import HomePage from './src/screens/HomePage';
 import MenuPage from './src/screens/MenuPage';
 import CartPage from './src/screens/CartPage';
 import ProfilePage from './src/screens/ProfilePage';
-import AdminDashboard from './src/screens/AdminDashboard'; // Import Admin Screen
+import AdminDashboard from './src/screens/AdminDashboard';
 import { COLORS } from './src/theme';
 
 const Stack = createNativeStackNavigator();
@@ -104,14 +103,11 @@ export default function App() {
           initialRouteName={initialRoute}
           screenOptions={{ headerShown: false }}
         >
-          {/* Authentication Screens */}
           <Stack.Screen name="Login" component={LoginPage} />
           <Stack.Screen name="SignUp" component={SignUpPage} />
 
-          {/* User Dashboard */}
           <Stack.Screen name="Main" component={MainTabs} />
 
-          {/* Admin Dashboard */}
           <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
         </Stack.Navigator>
       </NavigationContainer>

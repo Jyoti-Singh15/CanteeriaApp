@@ -53,7 +53,7 @@ export default function ProfilePage({ navigation }) {
     setLoading(true);
     try {
       const data = await getUserOrders(userId);
-      // Sort: Newest first
+
       setOrders(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
     } catch (error) {
       console.error("Failed to load orders", error);

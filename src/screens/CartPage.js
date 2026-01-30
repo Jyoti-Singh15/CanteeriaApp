@@ -22,7 +22,7 @@ export default function CartPage({ navigation }) {
 
       const orderData = {
         items: cart.map(item => ({
-          name: item.name, // Pass name for KDS visibility
+          name: item.name,
           foodId: item.id || item._id,
           quantity: item.quantity,
           price: item.price

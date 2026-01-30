@@ -1,8 +1,8 @@
 export const COLORS = {
-  primary: '#FF4B3A', // Vibrant Red-Orange
+  primary: '#FF4B3A',
   primaryDark: '#D63426',
-  secondary: '#FFC107', // Gold/Yellow
-  background: '#F9F9F9', // Light Grey Background
+  secondary: '#FFC107',
+  background: '#F9F9F9',
   card: '#FFFFFF',
   text: '#2D2D2D',
   textLight: '#7D7D7D',
@@ -10,7 +10,7 @@ export const COLORS = {
   border: '#E8E8E8',
   success: '#4CAF50',
   error: '#FF0000',
-  admin: '#2C3E50', // Dark Blue for Admin
+  admin: '#2C3E50',
 };
 
 export const SPACING = {

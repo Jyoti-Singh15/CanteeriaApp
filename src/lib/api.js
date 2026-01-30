@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Use environment variable, fallback to hardcoded production URL if missing
+
 const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://canteeriaapp.onrender.com';
 
 const apiCall = async (endpoint, options = {}) => {
@@ -35,14 +35,11 @@ const apiCall = async (endpoint, options = {}) => {
   }
 };
 
-// Based on your backend menuController.js
 export const getMenu = async () => {
-  // Using the new /api/products endpoint
   const data = await apiCall('/api/products');
   return data || [];
 };
 
-// Based on your backend auth/signup logic
 export const signUp = async (userData) => {
   return await apiCall('/api/auth/signup', {
     method: 'POST',
@@ -50,7 +47,6 @@ export const signUp = async (userData) => {
   });
 };
 
-// Based on your backend auth/login logic
 export const login = async (credentials) => {
   return await apiCall('/api/auth/login', {
     method: 'POST',
@@ -58,7 +54,6 @@ export const login = async (credentials) => {
   });
 };
 
-// Based on your backend orderController.js
 export const createOrder = async (orderData) => {
   return await apiCall('/api/orders', {
     method: 'POST',

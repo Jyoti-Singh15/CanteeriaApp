@@ -5,8 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SPACING, SHADOWS } from '../theme';
 import { Utensils } from 'lucide-react-native';
 
-// Use 10.0.2.2 for Android Emulator, localhost for iOS Simulator/Web
-// For physical device, replace with your PC's IP address (e.g., 192.168.1.5)
 import { login } from '../lib/api';
 
 export default function LoginPage({ navigation }) {
@@ -24,13 +22,11 @@ export default function LoginPage({ navigation }) {
     try {
       const data = await login({ email, password });
 
-      // const data = await response.json(); // helper returns data directly
-
       if (data.success) {
         await AsyncStorage.setItem('userToken', data.token);
         await AsyncStorage.setItem('userName', data.user.name);
         await AsyncStorage.setItem('userEmail', data.user.email);
-        await AsyncStorage.setItem('userId', String(data.user.id)); // Fixes Android crash: AsyncStorage only accepts strings
+        await AsyncStorage.setItem('userId', String(data.user.id));
         await AsyncStorage.setItem('userRole', data.user.role);
 
         if (data.user.role === 'admin') {

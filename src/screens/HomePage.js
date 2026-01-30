@@ -34,7 +34,6 @@ export default function HomePage({ navigation }) {
       setUserName(name || 'User');
 
       try {
-        // Fetch real menu items from backend
         const menuData = await getMenu();
         setItems(menuData);
       } catch (err) {
@@ -43,7 +42,6 @@ export default function HomePage({ navigation }) {
     };
     loadData();
 
-    // Set dynamic greeting
     const updateGreeting = () => {
       const hour = new Date().getHours();
       if (hour < 12) setGreeting('Good Morning');
@@ -51,7 +49,7 @@ export default function HomePage({ navigation }) {
       else setGreeting('Good Evening');
     };
     updateGreeting();
-    // Update every minute to be safe
+
     const interval = setInterval(updateGreeting, 60000);
     return () => clearInterval(interval);
   }, []);
@@ -62,14 +60,11 @@ export default function HomePage({ navigation }) {
     return matchesSearch && matchesCategory;
   });
 
-  // Calculate popular items based on sales (Top 4)
   const popularItems = [...items].sort((a, b) => (b.sales || 0) - (a.sales || 0)).slice(0, 4);
-  // If search is active, show all matches. If not, only show popular ones.
   const displayItems = searchQuery ? filteredItems : popularItems;
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>{greeting}, {userName}! ☀️</Text>
@@ -78,12 +73,10 @@ export default function HomePage({ navigation }) {
             <Text style={styles.location}>Main Canteen, Campus</Text>
           </View>
         </View>
-
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
 
-        {/* Search Bar - ACTIVE */}
         <View style={styles.searchContainer}>
           <Search color={COLORS.textLight} size={20} />
           <TextInput
@@ -97,7 +90,6 @@ export default function HomePage({ navigation }) {
           />
         </View>
 
-        {/* Hero Banner - Only show if not searching */}
         {searchQuery === '' && (
           <View style={styles.heroContainer}>
             <View style={styles.heroContent}>
@@ -113,7 +105,6 @@ export default function HomePage({ navigation }) {
         )}
 
 
-        {/* Categories - Wrapped Grid */}
         {searchQuery === '' && (
           <View style={{ marginBottom: SPACING.l }}>
             <Text style={styles.sectionTitle}>Categories</Text>
@@ -124,7 +115,7 @@ export default function HomePage({ navigation }) {
                   style={[
                     styles.categoryPill,
                     selectedCategory === cat.name && styles.activeCategory,
-                    { marginBottom: 10 } // Add vertical spacing for wrapped items
+                    { marginBottom: 10 }
                   ]}
                   onPress={() => navigation.navigate('Menu', { category: cat.name })}
                 >
@@ -136,7 +127,6 @@ export default function HomePage({ navigation }) {
           </View>
         )}
 
-        {/* Popular / Search Results */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>{searchQuery ? 'Search Results' : 'Popular Now'}</Text>
           {!searchQuery && (

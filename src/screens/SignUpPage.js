@@ -20,7 +20,6 @@ export default function SignUpPage({ navigation }) {
 
     setLoading(true);
     try {
-      // Logic adapted from your web SignUpPage
       const data = await signUp({ name, email, password });
 
       if (data.success) {

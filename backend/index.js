@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs');
 const http = require('http');
 const { Server } = require('socket.io');
 
-// Models
 const User = require('./models/User');
 const Product = require('./models/Product');
 const Order = require('./models/Order');
@@ -25,29 +24,22 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve Static Files (KDS Website)
-// Serve Static Files (KDS Website)
 app.use(express.static('public'));
 
-// Explicit route for Kitchen Display
 app.get('/kitchen', (req, res) => {
     res.sendFile(__dirname + '/public/kitchen.html');
 });
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/canteeria', {})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
 
-// --- Socket.IO ---
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
 });
 
-// --- Seed Initial Data ---
 const seedData = async () => {
     try {
-        // Seed Admin (Secured in Prod, Default in Dev)
         const adminEmail = process.env.ADMIN_EMAIL || "admin@canteeria.com";
         const adminPassword = process.env.ADMIN_PASSWORD || "password123";
 
@@ -64,7 +56,6 @@ const seedData = async () => {
             console.log(`Seeded Admin User: ${adminEmail}`);
         }
 
-        // Seed Products if empty
         const productCount = await Product.countDocuments();
         if (productCount === 0) {
             const products = [
@@ -83,9 +74,6 @@ const seedData = async () => {
 seedData();
 
 
-// --- Routes ---
-
-// Login (BCrypt)
 app.post('/api/auth/login', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -105,7 +93,6 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
-// Signup (BCrypt)
 app.post('/api/auth/signup', async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -126,7 +113,6 @@ app.post('/api/auth/signup', async (req, res) => {
     }
 });
 
-// Get Menu
 app.get('/api/products', async (req, res) => {
     try {
         const products = await Product.find().sort({ _id: -1 }); // Newest first
@@ -136,7 +122,6 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
-// Add Product (Admin)
 app.post('/api/products', async (req, res) => {
     try {
         const { name, price, image, category } = req.body;
@@ -149,14 +134,12 @@ app.post('/api/products', async (req, res) => {
     }
 });
 
-// Create Order (Realtime)
 app.post('/api/orders', async (req, res) => {
     try {
         const { items, totalAmount, studentName, userId } = req.body;
         const newOrder = new Order({ items, totalAmount, studentName, userId });
         await newOrder.save();
 
-        // Increment sales for ordered products
         for (const item of items) {
             if (item.foodId) {
                 await Product.findByIdAndUpdate(item.foodId, { $inc: { sales: item.quantity } });
@@ -177,7 +160,6 @@ app.post('/api/orders', async (req, res) => {
     }
 });
 
-// Update Order Status
 app.put('/api/orders/:id/status', async (req, res) => {
     try {
         const { status } = req.body;
@@ -189,7 +171,6 @@ app.put('/api/orders/:id/status', async (req, res) => {
     }
 });
 
-// Get User Orders
 app.get('/api/orders/user/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
@@ -208,7 +189,6 @@ app.get('/api/orders/user/:userId', async (req, res) => {
     }
 });
 
-// Admin Analytics (Full Data for now)
 app.get('/api/admin/analytics', async (req, res) => {
     try {
         const totalSalesResult = await Order.aggregate([
@@ -218,7 +198,6 @@ app.get('/api/admin/analytics', async (req, res) => {
         const totalSales = totalSalesResult[0]?.total || 0;
         const totalOrders = await Order.countDocuments();
 
-        // Populate product details to get names for old orders, or use stored name
         const recentOrders = await Order.find().sort({ date: -1 }).populate('items.foodId');
 
         res.json({

@@ -294,13 +294,11 @@
     <!-- Socket.IO Client -->
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        // Initialize Socket with explicit transport options for better stability behind proxies (Render)
         const socket = io({
-            transports: ['websocket', 'polling'], // Try websocket first, fallback to polling
+            transports: ['websocket', 'polling'],
             path: '/socket.io/',
         });
 
-        // Socket Debugging
         socket.on('connect', () => {
             console.log("🟢 Connected to Socket.IO Server:", socket.id);
         });
@@ -316,12 +314,11 @@
         let currentFilter = 'all';
         let allOrders = [];
 
-        // Fetch initial orders
         async function fetchOrders() {
             try {
                 const res = await fetch('/api/admin/analytics');
                 const data = await res.json();
-                allOrders = data.recentOrders || []; // Using recentOrders logic from backend
+                allOrders = data.recentOrders || [];
                 renderOrders();
                 updateCounts();
             } catch (err) {
@@ -329,11 +326,9 @@
             }
         }
 
-        // Render Orders based on filter
         function renderOrders() {
             ordersContainer.innerHTML = '';
 
-            // Sort: Pending -> Preparing -> Ready -> Completed
             const statusPriority = { 'pending': 1, 'preparing': 2, 'ready': 3, 'completed': 4, 'cancelled': 5 };
 
             let filtered = allOrders.filter(o => {
@@ -397,7 +392,6 @@
             readyCount.textContent = allOrders.filter(o => o.status === 'ready').length;
         }
 
-        // Update Order Status via API
         window.updateStatus = async (id, status) => {
             try {
                 await fetch(`/api/orders/${id}/status`, {
@@ -405,13 +399,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status })
                 });
-                // UI will update automatically via Socket.io event
             } catch (err) {
                 alert("Failed to update status");
             }
         };
 
-        // Filter Buttons
         document.querySelectorAll('.filter-group button').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.filter-group button').forEach(b => b.classList.remove('active'));
@@ -423,19 +415,14 @@
 
         document.getElementById('refresh-btn').addEventListener('click', fetchOrders);
 
-        // Socket Listeners
         socket.on('newOrder', (order) => {
-            // Add to list if not exists, else update
-            // Simple approach: re-fetch to ensure sync
             fetchOrders();
-            // Play sound potentially
         });
 
         socket.on('orderStatusUpdated', (data) => {
             fetchOrders();
         });
 
-        // Init
         fetchOrders();
     </script>
 </body>

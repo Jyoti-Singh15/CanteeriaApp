@@ -20,7 +20,6 @@ export default function MenuPage({ route }) {
         const items = await getMenu();
         setMenu(items);
 
-        // Apply initial filters
         let results = items;
         if (category && category !== 'All') {
           results = results.filter(i => i.category === category);
@@ -97,7 +96,6 @@ const styles = StyleSheet.create({
     padding: SPACING.m,
     ...SHADOWS.light
   },
-  // Removed itemImage style
   itemInfo: { justifyContent: 'space-between', gap: 5 },
   itemName: { fontSize: 16, fontWeight: 'bold', color: COLORS.text },
   itemCategory: { fontSize: 12, color: COLORS.textLight, marginBottom: 4 },

@@ -17,10 +17,8 @@ export default function AdminDashboard({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
 
-    // Dropdown State
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
-    // New Item State (Image removed)
     const [newItem, setNewItem] = useState({ name: '', price: '', category: '' });
     const [loading, setLoading] = useState(false);
 
@@ -42,7 +40,6 @@ export default function AdminDashboard({ navigation }) {
     useEffect(() => {
         fetchStats();
 
-        // Realtime Listeners
         socket.on('newOrder', (order) => {
             Alert.alert("New Order!", `Order received from ${order.studentName || 'Student'}`);
             fetchStats();
@@ -73,7 +70,6 @@ export default function AdminDashboard({ navigation }) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status })
             });
-            // Socket will auto-trigger refresh via 'orderStatusUpdated'
         } catch (error) {
             Alert.alert("Error", "Failed to update status");
         }
@@ -108,7 +104,6 @@ export default function AdminDashboard({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Admin Dashboard</Text>
                 <View style={{ flexDirection: 'row', gap: 15 }}>
@@ -123,7 +118,6 @@ export default function AdminDashboard({ navigation }) {
                 contentContainerStyle={styles.content}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
-                {/* Analytics Cards */}
                 <Text style={styles.sectionTitle}>Overview</Text>
                 <View style={styles.statsGrid}>
                     <View style={[styles.statCard, { backgroundColor: '#E3F2FD' }]}>
@@ -138,7 +132,6 @@ export default function AdminDashboard({ navigation }) {
                     </View>
                 </View>
 
-                {/* Live Orders Section */}
                 <Text style={styles.sectionTitle}>Live Orders</Text>
                 {stats?.recentOrders?.length === 0 && <Text style={{ color: COLORS.textLight }}>No active orders.</Text>}
                 {stats?.recentOrders?.map((order) => (
@@ -153,7 +146,6 @@ export default function AdminDashboard({ navigation }) {
                             </View>
                         </View>
 
-                        {/* Action Buttons */}
                         {order.status === 'pending' && (
                             <View style={styles.actionRow}>
                                 <TouchableOpacity style={[styles.actionBtn, { backgroundColor: COLORS.success }]} onPress={() => updateOrderStatus(order.id, 'completed')}>
@@ -168,7 +160,6 @@ export default function AdminDashboard({ navigation }) {
                 ))}
             </ScrollView>
 
-            {/* Add Item Modal */}
             <Modal visible={modalVisible} animationType="slide" transparent>
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
@@ -196,7 +187,6 @@ export default function AdminDashboard({ navigation }) {
                 </View>
             </Modal>
 
-            {/* Category Selection Modal */}
             <Modal visible={dropdownVisible} animationType="fade" transparent>
                 <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setDropdownVisible(false)}>
                     <View style={styles.dropdownModal}>
