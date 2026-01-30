@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -34,8 +34,8 @@ function MainTabs() {
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.1,
           shadowRadius: 4,
-          height: 60,
-          paddingBottom: 10,
+          height: Platform.OS === 'android' ? 70 : 90,
+          paddingBottom: Platform.OS === 'android' ? 10 : 30,
           paddingTop: 10
         }
       }}

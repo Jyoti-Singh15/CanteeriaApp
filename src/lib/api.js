@@ -21,6 +21,7 @@ const apiCall = async (endpoint, options = {}) => {
   }
 
   try {
+    console.log(`[API Call] Fetching: ${url}`);
     const response = await fetch(url, config);
     // Handle empty responses
     const text = await response.text();
@@ -29,7 +30,7 @@ const apiCall = async (endpoint, options = {}) => {
     if (!response.ok) throw new Error(data.message || 'Server Error');
     return data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error(`[API Call Failed] ${url}`, error);
     throw error;
   }
 };
