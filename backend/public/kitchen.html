@@ -294,7 +294,21 @@
     <!-- Socket.IO Client -->
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
+        // Initialize Socket with explicit transport options for better stability behind proxies (Render)
+        const socket = io({
+            transports: ['websocket', 'polling'], // Try websocket first, fallback to polling
+            path: '/socket.io/',
+        });
+
+        // Socket Debugging
+        socket.on('connect', () => {
+            console.log("🟢 Connected to Socket.IO Server:", socket.id);
+        });
+
+        socket.on('connect_error', (err) => {
+            console.error("🔴 Socket Connection Error:", err);
+        });
+
         const ordersContainer = document.getElementById('orders-container');
         const pendingCount = document.getElementById('pending-count');
         const preparingCount = document.getElementById('preparing-count');

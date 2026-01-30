@@ -6,7 +6,7 @@ import { getUserOrders } from '../lib/api';
 import { COLORS, SPACING, SHADOWS } from '../theme';
 import io from 'socket.io-client';
 
-const SOCKET_URL = 'http://10.0.2.2:5000';
+const SOCKET_URL = 'https://canteeriaapp.onrender.com';
 
 export default function ProfilePage({ navigation }) {
   const [user, setUser] = useState({ name: '', email: '' });

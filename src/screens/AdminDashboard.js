@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import io from 'socket.io-client';
 
-const API_URL = 'http://10.0.2.2:5000';
+const API_URL = 'https://canteeriaapp.onrender.com';
 const socket = io(API_URL);
 
 const CATEGORIES = ["Breakfast", "Lunch", "Snacks", "Fast Food", "Drinks", "Desserts", "South Indian", "Chinese"];
